@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"axios": "^0.16.2",
+		"eslint": "^4.7.0",
 		"firebase": "^4.3.1",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.48.3",
@@ -16,6 +17,7 @@
 	"devDependencies": {
 		"babel-jest": "21.0.2",
 		"babel-preset-react-native": "4.0.0",
+		"eslint-config-rallycoding": "^3.2.0",
 		"jest": "21.1.0",
 		"react-test-renderer": "16.0.0-alpha.12"
 	},

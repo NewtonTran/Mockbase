@@ -90,40 +90,6 @@ export class PageSwiper extends Component {
         amount: '1',
         price: '69.17'
       }
-    ],
-    stockData: [
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      },
-      {
-        "x": 18,
-        "y": 153227
-      }
     ]
   };
 
@@ -152,14 +118,48 @@ export class PageSwiper extends Component {
         console.log(btcError);
       });
   }
-  //
-  // onPressBuy(currency) {
-  //   this.setState({});
-  // }
-  //
-  // onPressSell(currency) {
-  //   this.setState({});
-  // }
+
+  onPressBuyBTC() {
+    const value = (+this.state.btc) * (+this.state.btcText);
+    const newCurrBalance = (+this.state.btcText) + (+this.state.btcBalance);
+    const newCADBalance = (+this.state.cadBalance) - value;
+    this.setState({ btcText: '', btcBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  onPressBuyETH() {
+    const value = (+this.state.eth) * (+this.state.ethText);
+    const newCurrBalance = (+this.state.ethText) + (+this.state.ethbalance);
+    const newCADBalance = (+this.state.cadBalance) - value;
+    this.setState({ ethText: '', ethBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  onPressBuyLTC() {
+    const value = (+this.state.ltc) * (+this.state.ltcText);
+    const newCurrBalance = (+this.state.ltcText) + (+this.state.ltcBalance);
+    const newCADBalance = (+this.state.cadBalance) - value;
+    this.setState({ ltcText: '', ltcBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  onPressSellBTC() {
+    const value = (+this.state.btc) * (+this.state.btcText);
+    const newCurrBalance = (+this.state.btcBalance) - (+this.state.btcText);
+    const newCADBalance = (+this.state.cadBalance) + value;
+    this.setState({ btcText: '', btcBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  onPressSellETH() {
+    const value = (+this.state.eth) * (+this.state.ethText);
+    const newCurrBalance = (+this.state.ethbalance) - (+this.state.ethText);
+    const newCADBalance = (+this.state.cadBalance) + value;
+    this.setState({ ethText: '', ethBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  onPressSellLTC() {
+    const value = (+this.state.ltc) * (+this.state.ltcText);
+    const newCurrBalance = (+this.state.ltcBalance) - (+this.state.ltcText);
+    const newCADBalance = (+this.state.cadBalance) + value;
+    this.setState({ ltcText: '', ltcBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
 
   renderTransactions() {
     return this.state.transactions.map(transaction => {
@@ -220,10 +220,10 @@ export class PageSwiper extends Component {
             />
           </CardSection>
           <CardSection>
-          <Button>
+            <Button onPress={this.onPressBuyBTC.bind(this)}>
               Buy
             </Button>
-            <Button>
+            <Button onPress={this.onPressSellBTC.bind(this)}>
               Sell
             </Button>
           </CardSection>
@@ -240,10 +240,10 @@ export class PageSwiper extends Component {
           />
           </CardSection>
           <CardSection>
-          <Button>
+          <Button onPress={this.onPressBuyETH.bind(this)}>
             Buy
           </Button>
-          <Button>
+          <Button onPress={this.onPressSellETH.bind(this)}>
             Sell
           </Button>
           </CardSection>
@@ -260,10 +260,10 @@ export class PageSwiper extends Component {
             />
           </CardSection>
           <CardSection>
-            <Button>
+            <Button onPress={this.onPressBuyLTC.bind(this)}>
               Buy
             </Button>
-            <Button>
+            <Button onPress={this.onPressSellLTC.bind(this)}>
               Sell
             </Button>
           </CardSection>

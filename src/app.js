@@ -19,7 +19,6 @@ class App extends Component {
 
     var database = firebase.database();
 
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true, dashboard: true });
@@ -29,18 +28,12 @@ class App extends Component {
     });
   }
 
-  renderDashboard() {
-    return (
-        <PageSwiper />
-    );
-  }
-
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
         return (
           <View>
-            {this.renderDashboard()}
+            <PageSwiper />
           </View>
         );
       case false:
@@ -62,7 +55,7 @@ class App extends Component {
   render() {
     switch (this.state.loggedIn) {
       case true:
-        return this.renderDashboard();
+        return <PageSwiper />
       case false:
         return (
           <View>
