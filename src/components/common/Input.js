@@ -34,6 +34,15 @@ const CurrencyInput = ({ label, value, onChangeText, placeholder, secureTextEntr
   );
 };
 
+const BalanceDisplay = ({ label, balance }) => {
+  return (
+    <View style={styles.containerStyle}>
+      <Text style={styles.balanceStyleLabel}>{label}</Text>
+      <Text style={styles.balanceStyle}>{balance}</Text>
+    </View>
+  );
+};
+
 const styles = {
   inputStyle: {
     color: '#fbc02d',
@@ -63,6 +72,24 @@ const styles = {
     flex: 1,
     color: '#37474f'
   },
+  balanceStyleLabel: {
+    fontSize: 18,
+    paddingLeft: 10,
+    flex: 1,
+    color: '#37474f',
+    backgroundColor: '#FFF',
+    lineHeight: 40,
+    fontWeight: 'bold'
+  },
+  balanceStyle: {
+    color: '#37474f',
+    paddingRight: 5,
+    paddingLeft: 5,
+    fontSize: 18,
+    lineHeight: 40,
+    flex: 2,
+    backgroundColor: '#fff'
+  },
   containerStyle: {
     height: 40,
     flex: 1,
@@ -71,4 +98,4 @@ const styles = {
   }
 };
 
-export { Input, CurrencyInput };
+export { Input, CurrencyInput, BalanceDisplay };

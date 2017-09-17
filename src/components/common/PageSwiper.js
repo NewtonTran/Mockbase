@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Swiper from 'react-native-page-swiper';
-import { Button, CardSection, CurrencyInput, Transaction } from '.';
+import { Button, CardSection, CurrencyInput, Transaction, OpaqueCardSection, BalanceDisplay } from '.';
 
 export class PageSwiper extends Component {
   state = {
@@ -13,7 +13,7 @@ export class PageSwiper extends Component {
     btcText: '',
     ethText: '',
     ltcText: '',
-    cadBalance: '10000.00',
+    cadBalance: '100000.00',
     btcBalance: '0',
     ethBalance: '0',
     ltcBalance: '0',
@@ -25,7 +25,7 @@ export class PageSwiper extends Component {
         transactionType: 'BUY',
         currency: 'BTC',
         amount: '5',
-        price: '21320.56'
+        price: '4042.56'
       },
       {
         date: 'Sept. 16, 2017',
@@ -46,50 +46,43 @@ export class PageSwiper extends Component {
         transactionType: 'BUY',
         currency: 'LTC',
         amount: '1',
-        price: '69.17'
+        price: '70.12'
       },
       {
         date: 'Sept. 16, 2017',
         transactionType: 'BUY',
         currency: 'LTC',
         amount: '1',
-        price: '69.17'
+        price: '70.12'
       },
       {
         date: 'Sept. 16, 2017',
         transactionType: 'BUY',
-        currency: 'LTC',
+        currency: 'ETH',
         amount: '1',
-        price: '69.17'
+        price: '302.63'
+      },
+      {
+        date: 'Sept. 16, 2017',
+        transactionType: 'SELL',
+        currency: 'BTC',
+        amount: '1',
+        price: '4426.70'
+      },
+      {
+        date: 'Sept. 16, 2017',
+        transactionType: 'SELL',
+        currency: 'BTC',
+        amount: '1',
+        price: '4426.70'
       },
       {
         date: 'Sept. 16, 2017',
         transactionType: 'BUY',
-        currency: 'LTC',
+        currency: 'ETH',
         amount: '1',
-        price: '69.17'
+        price: '296.43'
       },
-      {
-        date: 'Sept. 16, 2017',
-        transactionType: 'BUY',
-        currency: 'LTC',
-        amount: '1',
-        price: '69.17'
-      },
-      {
-        date: 'Sept. 16, 2017',
-        transactionType: 'BUY',
-        currency: 'LTC',
-        amount: '1',
-        price: '69.17'
-      },
-      {
-        date: 'Sept. 16, 2017',
-        transactionType: 'BUY',
-        currency: 'LTC',
-        amount: '1',
-        price: '69.17'
-      }
     ]
   };
 
@@ -122,53 +115,90 @@ export class PageSwiper extends Component {
   onPressBuyBTC() {
     const value = (+this.state.btc) * (+this.state.btcText);
     const newCurrBalance = (+this.state.btcText) + (+this.state.btcBalance);
-    const newCADBalance = (+this.state.cadBalance) - value;
-    this.setState({ btcText: '', btcBalance: newCurrBalance, cadBalance: newCADBalance });
+    let newCADBalance = (+this.state.cadBalance) - value;
+    newCADBalance = newCADBalance.toFixed(2);
+    this.updateTransactions(
+      'Sept. 17, 2017', 'BUY', 'BTC', this.state.btcText, this.state.btc);
+    this.setState({
+      btcText: '',
+      btcBalance: newCurrBalance,
+      cadBalance: newCADBalance,
+    });
   }
 
   onPressBuyETH() {
     const value = (+this.state.eth) * (+this.state.ethText);
-    const newCurrBalance = (+this.state.ethText) + (+this.state.ethbalance);
-    const newCADBalance = (+this.state.cadBalance) - value;
-    this.setState({ ethText: '', ethBalance: newCurrBalance, cadBalance: newCADBalance });
+    const newCurrBalance = (+this.state.ethText) + (+this.state.ethBalance);
+    let newCADBalance = (+this.state.cadBalance) - value;
+    newCADBalance = newCADBalance.toFixed(2);
+    this.updateTransactions(
+      'Sept. 17, 2017', 'BUY', 'ETH', this.state.ethText, this.state.eth);
+    this.setState({
+      ethText: '',
+      ethBalance: newCurrBalance,
+      cadBalance: newCADBalance
+    });
   }
 
   onPressBuyLTC() {
     const value = (+this.state.ltc) * (+this.state.ltcText);
     const newCurrBalance = (+this.state.ltcText) + (+this.state.ltcBalance);
-    const newCADBalance = (+this.state.cadBalance) - value;
-    this.setState({ ltcText: '', ltcBalance: newCurrBalance, cadBalance: newCADBalance });
+    let newCADBalance = (+this.state.cadBalance) - value;
+    newCADBalance = newCADBalance.toFixed(2);
+    this.updateTransactions(
+      'Sept. 17, 2017', 'BUY', 'LTC', this.state.ethText, this.state.eth);
+    this.setState({
+      ltcText: '',
+      ltcBalance: newCurrBalance,
+      cadBalance: newCADBalance,
+    });
   }
 
   onPressSellBTC() {
     const value = (+this.state.btc) * (+this.state.btcText);
     const newCurrBalance = (+this.state.btcBalance) - (+this.state.btcText);
-    const newCADBalance = (+this.state.cadBalance) + value;
+    let newCADBalance = (+this.state.cadBalance) + value;
+    newCADBalance = newCADBalance.toFixed(2);
     this.setState({ btcText: '', btcBalance: newCurrBalance, cadBalance: newCADBalance });
   }
 
   onPressSellETH() {
     const value = (+this.state.eth) * (+this.state.ethText);
     const newCurrBalance = (+this.state.ethbalance) - (+this.state.ethText);
-    const newCADBalance = (+this.state.cadBalance) + value;
+    let newCADBalance = (+this.state.cadBalance) + value;
+    newCADBalance = newCADBalance.toFixed(2);
     this.setState({ ethText: '', ethBalance: newCurrBalance, cadBalance: newCADBalance });
   }
 
   onPressSellLTC() {
     const value = (+this.state.ltc) * (+this.state.ltcText);
     const newCurrBalance = (+this.state.ltcBalance) - (+this.state.ltcText);
-    const newCADBalance = (+this.state.cadBalance) + value;
+    let newCADBalance = (+this.state.cadBalance) + value;
+    newCADBalance = newCADBalance.toFixed(2);
     this.setState({ ltcText: '', ltcBalance: newCurrBalance, cadBalance: newCADBalance });
+  }
+
+  updateTransactions(date, transactionType, currency, amount, price) {
+    const newTransaction = { date, transactionType, currency, amount, price };
+    return this.state.transactions.unshift(newTransaction);
   }
 
   renderTransactions() {
     return this.state.transactions.map(transaction => {
         const { date, transactionType, currency, amount, price } = transaction;
-        return (
-          <Transaction date={date}>
-            {transactionType}, {currency}, {amount}, {price}
-          </Transaction>
-        );
+        console.log(transaction);
+          if (transactionType === 'BUY') {
+            return (
+              <Transaction date={date}>
+                Bought {amount} {currency} at price {price}.
+              </Transaction>
+            );
+          }
+          return (
+            <Transaction date={date}>
+              Sold {amount} {currency} at price {price}.
+            </Transaction>
+          );
       }
     );
   }
@@ -182,20 +212,22 @@ export class PageSwiper extends Component {
           <Text style={styles.subHeaderTextStyle}>Balances</Text>
 
           <CardSection>
-            <Text style={styles.balanceStyle}>CAD: {this.state.cadBalance}</Text>
+            <BalanceDisplay label='CAD' balance={this.state.cadBalance} />
           </CardSection>
 
           <CardSection>
-            <Text style={styles.balanceStyle}>BTC: {this.state.btcBalance}</Text>
+            <BalanceDisplay label='BTC' balance={this.state.btcBalance} />
           </CardSection>
 
           <CardSection>
-            <Text style={styles.balanceStyle}>ETH: {this.state.ethBalance}</Text>
+            <BalanceDisplay label='ETH' balance={this.state.ethBalance} />
           </CardSection>
 
           <CardSection>
-            <Text style={styles.lastBalanceStyle}>LTC: {this.state.ltcBalance}</Text>
+            <BalanceDisplay label='LTC' balance={this.state.ltcBalance} />
           </CardSection>
+
+          <Text style={styles.subHeader2TextStyle}>Manage</Text>
 
           <CardSection>
             <Button onPress={() => firebase.auth().signOut()}>
@@ -323,8 +355,19 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingBottom: 10,
     paddingLeft: 10,
-    fontSize: 18,
-    color: '#37474f'
+    fontSize: 20,
+    color: '#37474f',
+    fontWeight: 'bold'
+  },
+
+  subHeader2TextStyle: {
+    alignSelf: 'flex-start',
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingTop: 20,
+    fontSize: 20,
+    color: '#37474f',
+    fontWeight: 'bold'
   },
 
   headerTextStyle: {
