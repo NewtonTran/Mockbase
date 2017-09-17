@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Linking } from 'react-native';
 import Swiper from 'react-native-page-swiper';
 import { Button, CardSection, CurrencyInput, Transaction, OpaqueCardSection, BalanceDisplay } from '.';
 
@@ -204,6 +204,7 @@ export class PageSwiper extends Component {
   }
 
   render() {
+    const url = 'https://www.coinbase.com/mobile?locale=en';
     return (
       <Swiper style={styles.wrapper}>
         <View style={styles.profile}>
@@ -239,6 +240,13 @@ export class PageSwiper extends Component {
               Manage Profiles
             </Button>
           </CardSection>
+
+          <CardSection>
+            <Button onPress={() => Linking.openURL(url)}>
+              Ready for real trading?
+            </Button>
+          </CardSection>
+
         </View>
           <View style={styles.btcStyle}>
           <Text style={styles.headerTextStyle}>BTC</Text>
